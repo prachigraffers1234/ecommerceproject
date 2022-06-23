@@ -1,8 +1,6 @@
 <?php
 session_start();
-$contbl = mysqli_connect('localhost', 'root');
-
-$db = mysqli_select_db($contbl, 'ecommerceproject');
+include_once 'dbconnect.php';
 if(isset($_Post['signbtn'])){
     $venfname = $_POST['vendorfirstname'];
     $venlname = $_POST['vendorlastname'];
