@@ -1,14 +1,7 @@
 <?php
 session_start();
 
-$con = mysqli_connect('localhost', 'root');
-if($con){
- echo "connect successful";
-}else{
-    echo "No connection";
-}
-
-$db = mysqli_select_db($con, 'ecommerceproject');
+include_once 'dbconnect.php';
 
 if(isset($_POST['submit'])){
     $username = $_POST['adminname'];
