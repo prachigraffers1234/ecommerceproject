@@ -1,6 +1,7 @@
 <?php
 session_start();
 $contbl = mysqli_connect('localhost', 'root');
+
 $db = mysqli_select_db($contbl, 'ecommerceproject');
 if(isset($_Post['signbtn'])){
     $venfname = $_POST['vendorfirstname'];
@@ -12,25 +13,24 @@ if(isset($_Post['signbtn'])){
     $venage = $_POST['vendorage'];
     $venprofilephoto = $_POST['profile_photo'];
 
-    $sqltable = "select * from registration_vendor where fname='$venfname' && lname = '$venlname' && 
-    phone = '$venmobnum' && gender = '$vengender' && email = '$venemail' && vendpassword = '$venpassword'
-    && age = '$venage' && profileimage = '$venprofilephoto'";
+    $sqltable = "INSERT INTO registration_vendor(`fname`, `lname`, `phone`, `gender`, `email`, `vendpassword`,
+    `age`, `profileimage`) 
+    VALUES ('$venfname',' $venlname','$venmobnum','$vengender','$venemail','$venpassword','$venage','$venprofilephoto')";
+
    $result = mysqli_query($contbl, $sqltable);
    
-   $num = mysqli_num_rows($result);
-   if($num == 1){
-    echo "duplicate";
-    $_SESSION['fname'] = $venfname;
 
-   }else{
-    $sqltbl = "Insert into registration_vendor(`fname`, `lname`, `phone`, `gender`, `email`, `vendpassword`,
-    `age`, `profileimage`) 
-    VALUES ('$venfname',' $venlname','$venmobnum','$vengender','$venemail',
-    '$venpassword','$venage','$venprofilephoto')";
-    mysqli_query($contbl, $sqltbl);
-
+   if($result){
+     if(mysqli_affected_rows($contbl)>0){
+      echo "Registration success";
+     }else{
+      echo "Registration failed";
+     }
    }
   
+
+   
+
 
  }
 
