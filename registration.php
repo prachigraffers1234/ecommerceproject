@@ -1,6 +1,6 @@
 <?php
 include_once 'dbconnect.php';
-session_start();
+
 if(isset($_POST['signbtn'])){
     $venfname = $_POST['vendorfirstname'];
     $venlname = $_POST['vendorlastname'];
@@ -34,7 +34,6 @@ if(isset($_POST['signbtn'])){
 else{
   echo "no data";
  }
- session_destroy();
 
 
 ?>
