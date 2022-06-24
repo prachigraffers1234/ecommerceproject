@@ -1,36 +1,41 @@
 <?php
-session_start();
 include_once 'dbconnect.php';
-if(isset($_Post['signbtn'])){
+session_start();
+if(isset($_POST['signbtn'])){
     $venfname = $_POST['vendorfirstname'];
     $venlname = $_POST['vendorlastname'];
     $venmobnum = $_POST['vendormobnum'];
-    $vengender = $_POST['gender'];
+    $vengender = $_POST['genderdata'];   
     $venemail = $_POST['vendoremail'];
     $venpassword = $_POST['vendorpassword'];
     $venage = $_POST['vendorage'];
     $venprofilephoto = $_POST['profile_photo'];
-
-    $sqltable = "INSERT INTO registration_vendor(`fname`, `lname`, `phone`, `gender`, `email`, `vendpassword`,
-    `age`, `profileimage`) 
-    VALUES ('$venfname',' $venlname','$venmobnum','$vengender','$venemail','$venpassword','$venage','$venprofilephoto')";
-
-   $result = mysqli_query($contbl, $sqltable);
-   
-
-   if($result){
-     if(mysqli_affected_rows($contbl)>0){
-      echo "Registration success";
-     }else{
-      echo "Registration failed";
-     }
-   }
   
+    $sql=mysqli_query($con,"select userid from registration_vendor where email='$venemail'");
+    $row=mysqli_num_rows($sql);
 
-   
+    if($row>0){
+      echo "<script>alert('Email id already exist with another account. Please try with other email id');</script>";
+    
+    }
+    else{
+      $query = "INSERT INTO registration_vendor (`fname`, `lname`, `phone`, `gender`, `email`, `vendpassword`,
+      `age`, `profileimage`) 
+      VALUES ('$venfname',' $venlname','$venmobnum','$vengender','$venemail','$venpassword','$venage','$venprofilephoto')";
+      
+      $result = mysqli_query($con, $query);
+      if($result){
+        echo "<script>alert('Register successfully');</script>";
+      }
+     
+    }
 
-
+}
+else{
+  echo "no data";
  }
+ session_destroy();
+
 
 ?>
 
@@ -40,7 +45,7 @@ if(isset($_Post['signbtn'])){
 <body>
 
 <div class="container">
-<form method="POST">
+<form method="POST" action="">
 
 <label>First Name</label>
 <input type="text" name="vendorfirstname" value=""><br>
@@ -52,8 +57,8 @@ if(isset($_Post['signbtn'])){
 <input type="text" name="vendormobnum" value=""><br>
 
 <label>Gender</label>
-<input type="radio" name="gender" value="Male"><label for="male">Male</label>
-<input type="radio" name="gender" value="Female"><label for="female">Female</label><br>
+<input type="radio" name="genderdata" value="Male"><label>Male</label>
+<input type="radio" name="genderdata" value="Female"><label>Female</label><br>
 
 <label>Email</label>
 <input type="text" name="vendoremail" value=""><br>
