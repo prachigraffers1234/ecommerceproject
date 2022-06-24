@@ -35,7 +35,6 @@ else{
   echo "no data";
  }
 
-
 ?>
 
 
